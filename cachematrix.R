@@ -1,15 +1,39 @@
-## Put comments here that give an overall description of what your
-## functions do
+##Takes an input of a matrix (which can be inversed) through makeCacheMatrix
+##then checks to see if the data has been cached. If the data has been,
+##then cached data is returned with a message indicating that.
 
-## Write a short comment describing this function
-
-makeCacheMatrix <- function(x = matrix()) {
-
+#Setting X as a matrix. 
+makeCacheMatrix <- function( x = matrix()){
+  m <- NULL
+  set <- function(y){
+    x <<-y
+    m<<-NULL
+  }
+  get <- function() {
+    x 
+  }
+  setinverse <- function(solve){ ##generating inverse
+    m<<- solve
+    
+  }
+  getinverse <- function() {
+    m
+    
+  }
+  list(set = set, get = get, setinverse = setinverse, getinverse = getinverse)
 }
 
-
-## Write a short comment describing this function
-
-cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+##Below function returns a matrix that is the inverse of X
+cacheSolve <-function(x,...){
+  m <-x$getinverse()
+  if(!is.null(m)){ ##checks to see if there's a value in the cache
+    message("cached data")
+    return(m)
+  }
+  data <-x$get()
+  m <- solve(data,...)
+  x$setinverse(m)
+  m
+  
 }
+
